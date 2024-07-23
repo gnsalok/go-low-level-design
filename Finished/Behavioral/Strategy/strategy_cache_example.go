@@ -1,5 +1,14 @@
 package main
 
+/*
+What you need :-
+1. Context :: Cache
+2. Strategy :: EvictAlgo
+3. Concrete Strategies :: LRU and FIFO
+4. Context (Cache) will delegate the execution of strategy
+
+*/
+
 // Strategy Interface
 type EvictAlgo interface {
 	Evict(c *Cache) // it's your choice to keep pass *Cache in Evict method
