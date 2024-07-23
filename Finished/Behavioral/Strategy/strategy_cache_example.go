@@ -1,10 +1,8 @@
 package main
 
-import "fmt"
-
 // Strategy Interface
 type EvictAlgo interface {
-	Evict(c *Cache)
+	Evict(c *Cache) // it's your choice to keep pass *Cache in Evict method
 }
 
 // Concrete Strategy
@@ -37,7 +35,6 @@ func main() {
 	cache := &Cache{}
 	cache.setEvictionAlgo(LRU{})
 	cache.evictAlgo.Evict(cache) // Output: Evicting by LRU strategy
-
 
 	// Using the LFU strategy
 	cache.setEvictionAlgo(LFU{})
