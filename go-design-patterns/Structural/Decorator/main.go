@@ -1,73 +1,62 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
-// STEP-1 :: Component Interface
-
-// Notifier defines the interface for sending notifications.
-type Notifier interface {
-	Send(message string) string
+// Coffee is the base component interface
+type Coffee interface {
+	GetCost() float64
+	GetDescription() string
 }
 
-// Step 2 : Concrete Component
+// BasicCoffee is the concrete component
+type BasicCoffee struct{}
 
-// EmailNotifier is a concrete component that sends email notifications.
-type EmailNotifier struct{}
-
-func (e *EmailNotifier) Send(message string) string {
-	return fmt.Sprintf("Sending email: %s", message)
+func (b *BasicCoffee) GetCost() float64 {
+	return 2.0
 }
 
-// Step 3 : DECORATOR
-
-// NotifierDecorator is a base decorator that implements the Notifier interface.
-type NotifierDecorator struct {
-	Notifier Notifier
+func (b *BasicCoffee) GetDescription() string {
+	return "Basic Coffee"
 }
 
-func (d *NotifierDecorator) Send(message string) string {
-	return d.Notifier.Send(message)
+// MilkDecorator is a decorator
+type MilkDecorator struct {
+	Coffee Coffee
 }
 
-// Step 4 : ADD CONCRETE DECORATOR
-
-// SMSDecorator is a concrete decorator that adds SMS notification functionality.
-type SMSDecorator struct {
-	NotifierDecorator
+func (m *MilkDecorator) GetCost() float64 {
+	return m.Coffee.GetCost() + 0.5
 }
 
-func (s *SMSDecorator) Send(message string) string {
-	smsMessage := fmt.Sprintf("Sending SMS: %s", message)
-	return fmt.Sprintf("%s\n%s", smsMessage, s.NotifierDecorator.Send(message))
+func (m *MilkDecorator) GetDescription() string {
+	return m.Coffee.GetDescription() + ", Milk"
 }
 
-// FacebookDecorator is a concrete decorator that adds Facebook notification functionality.
-type FacebookDecorator struct {
-	NotifierDecorator
+// SugarDecorator is another decorator
+type SugarDecorator struct {
+	Coffee Coffee
 }
 
-func (f *FacebookDecorator) Send(message string) string {
-	facebookMessage := fmt.Sprintf("Sending Facebook message: %s", message)
-	return fmt.Sprintf("%s\n%s", facebookMessage, f.NotifierDecorator.Send(message))
+func (s *SugarDecorator) GetCost() float64 {
+	return s.Coffee.GetCost() + 0.3
 }
 
+func (s *SugarDecorator) GetDescription() string {
+	return s.Coffee.GetDescription() + ", Sugar"
+}
+
+// MAIN
 func main() {
-	// Create an EmailNotifier
-	emailNotifier := &EmailNotifier{}
+	var myCoffee Coffee = &BasicCoffee{}
+	fmt.Println(myCoffee.GetDescription(), "$", myCoffee.GetCost())
 
-	// Decorate the EmailNotifier with SMSDecorator
-	smsDecorator := &SMSDecorator{
-		NotifierDecorator: NotifierDecorator{Notifier: emailNotifier},
-	}
+	// Add Milk
+	myCoffee = &MilkDecorator{Coffee: myCoffee}
+	fmt.Println(myCoffee.GetDescription(), "$", myCoffee.GetCost())
 
-	// Further decorate with FacebookDecorator
-	facebookDecorator := &FacebookDecorator{
-		NotifierDecorator: NotifierDecorator{Notifier: smsDecorator},
-	}
-
-	// Send notifications
-	message := "Hello, World!"
-	result := facebookDecorator.Send(message)
-	fmt.Println(result)
-
+	// Add Sugar
+	myCoffee = &SugarDecorator{Coffee: myCoffee}
+	fmt.Println(myCoffee.GetDescription(), "$", myCoffee.GetCost())
 }
