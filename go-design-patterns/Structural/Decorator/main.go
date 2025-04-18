@@ -4,6 +4,13 @@ import (
 	"fmt"
 )
 
+/*
+Decorator Pattern
+- The Decorator pattern allows behavior to be added to individual objects, either statically or dynamically, without affecting the behavior of other objects from the same class.
+- It is a structural pattern that allows you to add new functionality to an existing object without altering its structure.
+- The Decorator pattern is typically used to extend the functionalities of classes in a flexible and reusable way.
+*/
+
 // Coffee is the base component interface
 type Coffee interface {
 	GetCost() float64
