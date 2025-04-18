@@ -1,5 +1,14 @@
 package main
 
+/*
+Factory Pattern
+- Factory pattern allows **loose coupling** between client and implementation.
+- Adding a new notifier (e.g., SlackNotifier) only requires implementing `Notifier` and updating the factory.
+- The client code remains unchanged.
+- This pattern is useful when the exact type of object to be created is not known until runtime.
+- It encapsulates the object creation process, allowing for better separation of concerns.
+*/
+
 import "fmt"
 
 // 1. Define Interface
