@@ -7,6 +7,12 @@ What you need :-
 3. Concrete Strategies :: LRU and FIFO
 4. Context (Cache) will delegate the execution of strategy
 
+Why use it?
+- Strategy pattern allows you to define a family of algorithms, encapsulate each one, and make them interchangeable.
+- Strategy lets the algorithm vary independently from clients that use it.
+- In this example, we can easily add new eviction strategies (like LFU) without modifying the Cache class.
+- The client code (main function) can switch between different eviction strategies at runtime.
+
 */
 
 // Strategy Interface
