@@ -1,8 +1,8 @@
-# design-patterns-go
+# Low Level Design in Go
 
-Design Patterns Using Go
+This repository contains low-level design patterns and implementations in Go, focusing on various design patterns and their applications in building robust systems.
 
-## Covered Design Pattern
+## Covered Design Patterns
 
 ### Creational
 
@@ -24,3 +24,12 @@ Design Patterns Using Go
 - Adapter
 - Decorator
 - Facade
+
+## Low Level Design Code
+- Rate Limiter
+- Loadbalancer
+- Http Server
+
+
+## Lead Maintainer
+- [Alok Tripathi](https://github.com/gnsalok)

@@ -29,7 +29,7 @@ func NewRateLimiter(capacity, refillRate int, refillInterval time.Duration) *Rat
 	return &RateLimiter{
 		capacity:       capacity,
 		refillRate:     refillRate,
-		tokens:         capacity, // intially it's capacity
+		tokens:         capacity, // initially it's capacity
 		lastRefill:     time.Now(),
 		refillInterval: refillInterval,
 	}
