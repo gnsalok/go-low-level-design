@@ -1,0 +1,5 @@
+server:
+  port: ":8080"
+jwt:
+  secretKey: "a_very_secret_key_change_me"
+  issuer: "my-app"
