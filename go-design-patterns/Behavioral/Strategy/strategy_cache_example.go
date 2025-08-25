@@ -16,31 +16,32 @@ Why use it?
 */
 
 // Strategy Interface
-type EvictAlgo interface {
+type EvictAlgoStrategy interface {
 	Evict(c *Cache) // it's your choice to keep pass *Cache in Evict method
 }
 
 // Concrete Strategy
-type LRU struct{}
+type LRUStrategy struct{}
 
-func (l LRU) Evict(c *Cache) {
+func (l LRUStrategy) Evict(c *Cache) {
 	println("Evicting by LRU strategy")
 }
 
 // Concrete strategy
-type LFU struct{}
+type LFUStrategy struct{}
 
-func (l LFU) Evict(c *Cache) {
+func (l LFUStrategy) Evict(c *Cache) {
 	println("Evicting by LFU strategy")
 }
 
 // Context :: CACHE
-
+// Cache is using Eviction Strategy to evict items from the cache
+// Notice it holds the interface, not a concrete implementation
 type Cache struct {
-	evictAlgo EvictAlgo
+	evictAlgo EvictAlgoStrategy
 }
 
-func (c *Cache) setEvictionAlgo(e EvictAlgo) {
+func (c *Cache) setEvictionStrategy(e EvictAlgoStrategy) {
 	c.evictAlgo = e
 }
 
@@ -48,11 +49,11 @@ func main() {
 
 	// Using the LRU strategy
 	cache := &Cache{}
-	cache.setEvictionAlgo(LRU{})
+	cache.setEvictionStrategy(LRUStrategy{})
 	cache.evictAlgo.Evict(cache) // Output: Evicting by LRU strategy
 
 	// Using the LFU strategy
-	cache.setEvictionAlgo(LFU{})
+	cache.setEvictionStrategy(LFUStrategy{})
 	cache.evictAlgo.Evict(cache) // Output: Evicting by LFU strategy
 
 }
