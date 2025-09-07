@@ -2,6 +2,13 @@ package main
 
 import "fmt"
 
+/*
+Strategy Pattern:
+- Strategy pattern allows you to define a family of algorithms, encapsulate each one, and make them interchangeable.
+- What? - used for interchangeable behaviors
+- Used for - Pricing, Auth, Payments etc.
+*/
+
 // PayStrategy defines the behavior (strategy interface)
 type PayStrategy interface {
 	Pay(amount int) error
