@@ -12,25 +12,24 @@ Why use it?
 - Strategy lets the algorithm vary independently from clients that use it.
 - In this example, we can easily add new eviction strategies (like LFU) without modifying the Cache class.
 - The client code (main function) can switch between different eviction strategies at runtime.
-
 */
 
 // Strategy Interface
-type EvictAlgoStrategy interface {
-	Evict(c *Cache) // it's your choice to keep pass *Cache in Evict method
+type EvictStrategy interface {
+	Evict() // it's your choice to keep pass *Cache in Evict method
 }
 
 // Concrete Strategy
 type LRUStrategy struct{}
 
-func (l LRUStrategy) Evict(c *Cache) {
+func (l LRUStrategy) Evict() {
 	println("Evicting by LRU strategy")
 }
 
 // Concrete strategy
 type LFUStrategy struct{}
 
-func (l LFUStrategy) Evict(c *Cache) {
+func (l LFUStrategy) Evict() {
 	println("Evicting by LFU strategy")
 }
 
@@ -38,22 +37,25 @@ func (l LFUStrategy) Evict(c *Cache) {
 // Cache is using Eviction Strategy to evict items from the cache
 // Notice it holds the interface, not a concrete implementation
 type Cache struct {
-	evictAlgo EvictAlgoStrategy
+	strategy EvictStrategy
 }
 
-func (c *Cache) setEvictionStrategy(e EvictAlgoStrategy) {
-	c.evictAlgo = e
+func NewCache(s EvictStrategy) *Cache {
+	return &Cache{strategy: s}
+}
+
+func (c *Cache) Do() {
+	c.strategy.Evict()
 }
 
 func main() {
 
 	// Using the LRU strategy
-	cache := &Cache{}
-	cache.setEvictionStrategy(LRUStrategy{})
-	cache.evictAlgo.Evict(cache) // Output: Evicting by LRU strategy
+	cache := NewCache(LRUStrategy{})
+	cache.Do() // Output: Evicting by LRU strategy
 
 	// Using the LFU strategy
-	cache.setEvictionStrategy(LFUStrategy{})
-	cache.evictAlgo.Evict(cache) // Output: Evicting by LFU strategy
+	cache = NewCache(LFUStrategy{})
+	cache.Do() // Output: Evicting by LFU strategy
 
 }
