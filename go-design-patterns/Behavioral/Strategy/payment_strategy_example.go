@@ -40,17 +40,17 @@ func NewCheckout(s PayStrategy) *Checkout {
 	return &Checkout{strategy: s}
 }
 
-// Do executes the payment via chosen strategy
-func (c *Checkout) Do(amount int) error {
+// Process executes the payment via chosen strategy
+func (c *Checkout) Process(amount int) error {
 	return c.strategy.Pay(amount)
 
 }
 
 func main() {
 	stripeCheckout := NewCheckout(Stripe{})
-	stripeCheckout.Do(100)
+	stripeCheckout.Process(100)
 
 	// Swap to PayPal strategy
 	paypalCheckout := NewCheckout(PayPal{})
-	paypalCheckout.Do(200)
+	paypalCheckout.Process(200)
 }
